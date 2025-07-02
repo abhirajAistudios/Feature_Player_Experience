@@ -19,3 +19,5 @@ MonoBehaviour:
     _xpRequired: 200
   - _level: 3
     _xpRequired: 300
+  - _level: 4
+    _xpRequired: 400

@@ -36,8 +36,9 @@ namespace PlayerExperience
         {
             _currentXp -= XPToNextLevel();
             _currentXpLevel++;
-            EventService.RefreshExperience.InvokeEvent();
+            EventService.OnLevelUp.InvokeEvent(_currentXpLevel);
             EventService.RefreshExperienceValue.InvokeEvent(XPToNextLevel());
+            EventService.RefreshExperience.InvokeEvent();
             Debug.Log(_currentXpLevel);
         }
 
