@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,8 @@ namespace PlayerExperience
         public Slider _slider;
         public TextMeshProUGUI _levelText;
         public TextMeshProUGUI _xpText;
+        public TextMeshProUGUI _xpGainedPopUp;
+        public TextMeshProUGUI _levelUpPopUp;
 
         private void Start()
         {
@@ -16,6 +19,7 @@ namespace PlayerExperience
             EventService.RefreshExperience.AddListener(ResetSliderValue);
             EventService.RefreshExperienceValue.AddListener(ResetSliderMaxValue);
             EventService.OnLevelUp.AddListener(ResetLevelText);
+            EventService.OnIncreaseOfXp.AddListener(Show);
         }
 
         private void IncreaseSliderValue(int value)
@@ -38,6 +42,27 @@ namespace PlayerExperience
         private void ResetLevelText(int value)
         {
             _levelText.text = "Level " + value;
+            StartCoroutine(LevelUpPopUp(value));
+        }
+        
+        private void Show(int value)
+        {
+            StartCoroutine(ShowXpPopUp(value));
+        }
+
+        private IEnumerator ShowXpPopUp(int value)
+        {
+            _xpGainedPopUp.text = "+" + value + " XP";
+            _xpGainedPopUp.gameObject.SetActive(true);
+            yield return new WaitForSeconds(1);
+            _xpGainedPopUp.gameObject.SetActive(false);
+        }
+
+        private IEnumerator LevelUpPopUp(int value)
+        {
+            _levelUpPopUp.gameObject.SetActive(true);
+            yield return new WaitForSeconds(1);
+            _levelUpPopUp.gameObject.SetActive(false);
         }
     }
 }
