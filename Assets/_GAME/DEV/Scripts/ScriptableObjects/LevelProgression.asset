@@ -13,5 +13,9 @@ MonoBehaviour:
   m_Name: LevelProgression
   m_EditorClassIdentifier: 
   levels:
-  - _level: 0
-    _xpRequired: 0
+  - _level: 1
+    _xpRequired: 100
+  - _level: 2
+    _xpRequired: 200
+  - _level: 3
+    _xpRequired: 300
