@@ -7,5 +7,6 @@ namespace PlayerExperience
     {
         public int _level;
         public int _xpRequired;
+        public UnlockableRewardSO[] rewards;
     }
 }

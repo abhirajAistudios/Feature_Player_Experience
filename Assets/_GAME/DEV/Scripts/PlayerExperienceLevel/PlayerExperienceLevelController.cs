@@ -11,7 +11,7 @@ namespace PlayerExperience
 
         private void Start()
         {
-            EventService.OnIncreaseOfXp.AddListener(IncreaseXp);
+            EventService.OnIncreaseOfXp.AddListener(GainXp);
         }
 
         private void Update()
@@ -23,7 +23,7 @@ namespace PlayerExperience
             }
         }
 
-        private void IncreaseXp(int gainAmount)
+        private void GainXp(int gainAmount)
         {
             _currentXp += gainAmount;
             while (_currentXp >= XPToNextLevel())
@@ -35,7 +35,19 @@ namespace PlayerExperience
         private void LevelUp()
         {
             _currentXp -= XPToNextLevel();
+           
+           
+
+            var rewards = levelProgressionSO.GetRewardsForLevel(_currentXpLevel);
+            if (rewards != null)
+            {
+                foreach (var reward in rewards)
+                {
+                    reward.Unlock();
+                }
+            }
             _currentXpLevel++;
+            
             EventService.OnLevelUp.InvokeEvent(_currentXpLevel);
             EventService.RefreshExperienceValue.InvokeEvent(XPToNextLevel());
             EventService.RefreshExperience.InvokeEvent();
