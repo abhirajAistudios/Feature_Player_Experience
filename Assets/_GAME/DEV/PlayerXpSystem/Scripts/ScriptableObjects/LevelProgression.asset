@@ -15,8 +15,7 @@ MonoBehaviour:
   levels:
   - _level: 1
     _xpRequired: 100
-    rewards:
-    - {fileID: 11400000, guid: b79bfe4485f60bb40b2ba8f06f149b69, type: 2}
+    rewards: []
   - _level: 2
     _xpRequired: 200
     rewards: []
