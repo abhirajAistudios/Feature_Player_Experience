@@ -10,5 +10,6 @@ public class UnlockableRewardSO : ScriptableObject
     public void Unlock()
     {
         Debug.Log("Unlocked" + rewardName);
+        // Logic to grant the reward can be added in future
     }
 }

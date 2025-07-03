@@ -6,6 +6,7 @@ namespace PlayerExperience.Events
         public EventController<int> ResetMaxExperienceValue;
         public EventController<int> ResetLevel;
         public EventController<int> ResetExperience;
+        public EventController OnLevelUp;
 
         public EventService()
         {
@@ -13,6 +14,7 @@ namespace PlayerExperience.Events
             ResetExperience = new EventController<int>();
             ResetLevel = new EventController<int>();
             ResetMaxExperienceValue = new EventController<int>();
+            OnLevelUp = new EventController();
         }
     }
 }

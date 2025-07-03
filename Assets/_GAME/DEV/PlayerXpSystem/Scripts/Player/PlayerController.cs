@@ -18,8 +18,11 @@ namespace PlayerExperience
         {
             _eventService = eventService;
         }
+        
         public void Update()
         {
+            // Pressing the Space key is used here to test the XP gain feature.
+            // XP can be increased from any script by invoking EventService.OnGainXp with the desired amount.
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 _eventService.OnGainXp.InvokeEvent(50);

@@ -8,6 +8,7 @@ namespace PlayerExperience.UI
     {
        private PlayerExperienceUIController _playerExperienceUIController;
 
+       // UI Elements
        public Slider _experienceFiller;
        public TextMeshProUGUI _levelText;
        public TextMeshProUGUI _xpText ;
@@ -20,37 +21,42 @@ namespace PlayerExperience.UI
            _playerExperienceUIController = playerExperienceUIController;
        }
        
-       public void ShowXpPopUp(int amount, bool isPositive)
+       // Spawns and animates an XP gain popup
+       public void ShowXpPopUp(int value)
        {
            GameObject obj = Instantiate(_xpPopUp, _spawnTargetCanvas);
            TextMeshProUGUI text = obj.GetComponent<TextMeshProUGUI>();
            CanvasGroup canvasGroup = obj.GetComponent<CanvasGroup>();
         
-           text.text = (isPositive ? "+" : "-") + Mathf.Abs(amount);
+           text.text = " + " + value;
         
-           // Set starting position
+           // Set initial position at center
            obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         
-           // Animate with LeanTween
+           // Animate the popup: move right over 1.5 seconds
            LeanTween.moveX(obj.GetComponent<RectTransform>(), 200f, 1.5f).setEaseOutCubic();
         
-           LeanTween.alphaCanvas(canvasGroup, 0f, 0.5f).setEaseOutQuad().setOnComplete(() => {
+           // Fade out and destroy after animation
+           LeanTween.alphaCanvas(canvasGroup, 0f, 1.5f).setEaseOutQuad().setOnComplete(() => {
                Destroy(obj);
            });
        }
 
+       // Spawns and animates a Level Up popup
        public void ShowLevelUpPopUp()
        {
            GameObject obj = Instantiate(_levelUpPopUp, _spawnTargetCanvas);
            TextMeshProUGUI text = obj.GetComponent<TextMeshProUGUI>();
            CanvasGroup canvasGroup = obj.GetComponent<CanvasGroup>();
            
+           // Set initial position at center
            obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         
-           // Animate with LeanTween
-           LeanTween.moveY(obj.GetComponent<RectTransform>(), 100f, 2.0f).setEaseOutCubic();
+           // Animate the popup: move upward over 2 seconds
+           LeanTween.moveY(obj.GetComponent<RectTransform>(), 200f, 2.0f).setEaseOutCubic();
         
-           LeanTween.alphaCanvas(canvasGroup, 0f, 0.5f).setEaseOutQuad().setOnComplete(() => {
+           // Fade out and destroy after animation
+           LeanTween.alphaCanvas(canvasGroup, 0f, 1.5f).setEaseOutQuad().setOnComplete(() => {
                Destroy(obj);
            });
        }
