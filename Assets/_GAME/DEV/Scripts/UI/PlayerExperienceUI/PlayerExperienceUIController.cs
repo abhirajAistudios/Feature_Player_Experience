@@ -18,17 +18,9 @@ namespace PlayerExperience.UI
 
         public void AddListensers()
         {
-           _uiService._eventService.OnGainXp.AddListener(IncreaseSliderValue);
-           _uiService._eventService.OnGainXp.AddListener(Show);
            _uiService._eventService.ResetExperience.AddListener(ResetSliderValue);
            _uiService._eventService.ResetMaxExperienceValue.AddListener(ResetSliderMaxValue);
            _uiService._eventService.ResetLevel.AddListener(ResetLevelText);
-        }
-        
-        private void IncreaseSliderValue(int value)
-        {
-            _playerExperienceUIView._experienceFiller.value += value;
-            _playerExperienceUIView._xpText.text = _playerExperienceUIView._experienceFiller.value + " / "  + _playerExperienceUIView._experienceFiller.maxValue;
         }
 
         private void ResetSliderValue(int  value)

@@ -30,26 +30,25 @@ namespace PlayerExperience
         private void GainXp(int gainAmount)
         {
             _currentXp += gainAmount;
+
+            bool leveledup = false;
             
             while (_currentXp >= XPToNextLevel())
             {
-                LevelUp();
-            }
-        }
-
-        private void LevelUp()
-        {
-            _currentXp -= XPToNextLevel();
-            
-            var rewards = _levelProgressionSO.GetRewardsForLevel(_currentXpLevel);
-            if (rewards != null)
-            {
-                foreach (var reward in rewards)
+                _currentXp -= XPToNextLevel();
+                _currentXpLevel++;
+                
+                leveledup = true;
+                
+                var rewards = _levelProgressionSO.GetRewardsForLevel(_currentXpLevel);
+                if (rewards != null)
                 {
-                    reward.Unlock();
+                    foreach (var reward in rewards)
+                    {
+                        reward.Unlock();
+                    }
                 }
             }
-            _currentXpLevel++;
             
             InvokeLevelUpEvents();
         }
