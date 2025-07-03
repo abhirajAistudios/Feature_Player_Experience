@@ -1,16 +1,13 @@
-using System;
-using UnityEngine;
-
-namespace PlayerExperience
+namespace PlayerExperience.Events
 {
-    public class EventService : MonoBehaviour
+    public class EventService 
     {
-        public static EventController<int> OnIncreaseOfXp;
-        public static EventController<int> RefreshExperienceValue;
-        public static EventController RefreshExperience;
-        public static EventController<int> OnLevelUp;
+        public EventController<int> OnIncreaseOfXp;
+        public EventController<int> RefreshExperienceValue;
+        public EventController RefreshExperience;
+        public EventController<int> OnLevelUp;
 
-        public void Awake()
+        public EventService()
         {
             OnIncreaseOfXp = new EventController<int>();
             RefreshExperience = new EventController();

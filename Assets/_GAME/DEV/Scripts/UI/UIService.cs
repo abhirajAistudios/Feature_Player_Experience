@@ -1,4 +1,5 @@
 using System.Collections;
+using PlayerExperience.Events;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,21 +8,26 @@ namespace PlayerExperience
 {
     public class UIService : MonoBehaviour
     {
+        private EventService _eventService;
         public Slider _slider;
         public TextMeshProUGUI _levelText;
         public TextMeshProUGUI _xpText;
         public TextMeshProUGUI _xpGainedPopUp;
         public TextMeshProUGUI _levelUpPopUp;
 
-        private void Start()
+        public void UIStart()
         {
-            EventService.OnIncreaseOfXp.AddListener(IncreaseSliderValue);
-            EventService.RefreshExperience.AddListener(ResetSliderValue);
-            EventService.RefreshExperienceValue.AddListener(ResetSliderMaxValue);
-            EventService.OnLevelUp.AddListener(ResetLevelText);
-            EventService.OnIncreaseOfXp.AddListener(Show);
+            _eventService.OnIncreaseOfXp.AddListener(IncreaseSliderValue);
+            _eventService.RefreshExperience.AddListener(ResetSliderValue);
+            _eventService.RefreshExperienceValue.AddListener(ResetSliderMaxValue);
+            _eventService.OnLevelUp.AddListener(ResetLevelText);
+            _eventService.OnIncreaseOfXp.AddListener(Show);
         }
 
+        public void InjectDependecies(EventService eventService)
+        {
+            _eventService  = eventService;
+        }
         private void IncreaseSliderValue(int value)
         {
             _slider.value += value;

@@ -1,24 +1,31 @@
-using System;
+using PlayerExperience.Events;
 using UnityEngine;
 
 namespace PlayerExperience
 {
-    public class PlayerExperienceLevelController : MonoBehaviour
+    public class PlayerExperienceLevelController
     {
+        private EventService _eventService;
         public LevelProgressionSO levelProgressionSO;
         private int _currentXpLevel = 1;
         private int _currentXp = 0;
+        
 
-        private void Start()
+        public void InjectDependecies(EventService eventService)
         {
-            EventService.OnIncreaseOfXp.AddListener(GainXp);
+            _eventService = eventService;
+            SubscribeToEvents();
         }
-
+        private void SubscribeToEvents()
+        {
+            _eventService.OnIncreaseOfXp.AddListener(GainXp);
+        }
+        
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                EventService.OnIncreaseOfXp.InvokeEvent(20);
+                _eventService.OnIncreaseOfXp.InvokeEvent(20);
                 Debug.Log(XPToNextLevel());
             }
         }
@@ -48,9 +55,9 @@ namespace PlayerExperience
             }
             _currentXpLevel++;
             
-            EventService.OnLevelUp.InvokeEvent(_currentXpLevel);
-            EventService.RefreshExperienceValue.InvokeEvent(XPToNextLevel());
-            EventService.RefreshExperience.InvokeEvent();
+            _eventService.OnLevelUp.InvokeEvent(_currentXpLevel);
+            _eventService.RefreshExperienceValue.InvokeEvent(XPToNextLevel());
+            _eventService.RefreshExperience.InvokeEvent();
             Debug.Log(_currentXpLevel);
         }
 
