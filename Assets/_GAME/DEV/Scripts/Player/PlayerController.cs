@@ -22,7 +22,7 @@ namespace PlayerExperience
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                _eventService.OnGainXp.InvokeEvent(20);
+                _eventService.OnGainXp.InvokeEvent(50);
             }
         }
     }

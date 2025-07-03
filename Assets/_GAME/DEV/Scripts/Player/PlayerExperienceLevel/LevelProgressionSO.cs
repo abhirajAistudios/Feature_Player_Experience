@@ -5,6 +5,8 @@ using UnityEngine;
 public class LevelProgressionSO : ScriptableObject
 {
     public LevelData[] levels;
+    
+    public int MaxLevel => levels.Length;
 
     public int GetXPForLevel(int level) => level - 1 < levels.Length ? levels[level - 1]._xpRequired : int.MaxValue;
 
