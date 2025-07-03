@@ -25,6 +25,7 @@ namespace PlayerExperience.UI
         {
             _playerExperienceUIView._experienceFiller.value = value;
             _playerExperienceUIView._xpText.text = _playerExperienceUIView._experienceFiller.value + " / "  + _playerExperienceUIView._experienceFiller.maxValue;
+            _playerExperienceUIView.ShowXpPopUp(value,true);
         }
 
         private void ResetSliderMaxValue(int value)
@@ -35,6 +36,9 @@ namespace PlayerExperience.UI
         private void ResetLevelText(int value)
         {
             _playerExperienceUIView._levelText.text = "Level " + value;
+            _playerExperienceUIView.ShowLevelUpPopUp();
         }
+        
+        
     }
 }
