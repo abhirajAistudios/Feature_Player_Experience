@@ -9,11 +9,13 @@ namespace PlayerExperience
         private LevelProgressionSO _levelProgressionSO;
         
         private int _currentXpLevel = 1;
-        private int _currentXp = 0;
+        private int _currentXp;
+        private int _initialXp = 0;
 
         public PlayerExperienceLevelController(LevelProgressionSO levelProgressionSO)
         {
             _levelProgressionSO = levelProgressionSO;
+            _currentXp = _initialXp;
         }
         public void InjectDependecies(EventService eventService)
         {
@@ -55,8 +57,8 @@ namespace PlayerExperience
         private void InvokeLevelUpEvents()
         {
             _eventService.ResetLevel.InvokeEvent(_currentXpLevel);
-            _eventService.ResetExperienceValue.InvokeEvent(XPToNextLevel());
-            _eventService.ResetExperience.InvokeEvent();
+            _eventService.ResetExperience.InvokeEvent(_currentXp);
+            _eventService.ResetMaxExperienceValue.InvokeEvent(XPToNextLevel());
         }
         public int XPToNextLevel() => _levelProgressionSO.GetXPForLevel(_currentXpLevel);
     }
