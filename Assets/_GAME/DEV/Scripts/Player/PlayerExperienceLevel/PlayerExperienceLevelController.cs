@@ -6,11 +6,15 @@ namespace PlayerExperience
     public class PlayerExperienceLevelController
     {
         private EventService _eventService;
-        public LevelProgressionSO levelProgressionSO;
+        private LevelProgressionSO _levelProgressionSO;
         
         private int _currentXpLevel = 1;
         private int _currentXp = 0;
 
+        public PlayerExperienceLevelController(LevelProgressionSO levelProgressionSO)
+        {
+            _levelProgressionSO = levelProgressionSO;
+        }
         public void InjectDependecies(EventService eventService)
         {
             _eventService = eventService;
@@ -18,20 +22,13 @@ namespace PlayerExperience
         }
         private void SubscribeToEvents()
         {
-            _eventService.OnIncreaseOfXp.AddListener(GainXp);
-        }
-        
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _eventService.OnIncreaseOfXp.InvokeEvent(20);
-            }
+            _eventService.OnGainXp.AddListener(GainXp);
         }
 
         private void GainXp(int gainAmount)
         {
             _currentXp += gainAmount;
+            
             while (_currentXp >= XPToNextLevel())
             {
                 LevelUp();
@@ -42,7 +39,7 @@ namespace PlayerExperience
         {
             _currentXp -= XPToNextLevel();
             
-            var rewards = levelProgressionSO.GetRewardsForLevel(_currentXpLevel);
+            var rewards = _levelProgressionSO.GetRewardsForLevel(_currentXpLevel);
             if (rewards != null)
             {
                 foreach (var reward in rewards)
@@ -57,10 +54,10 @@ namespace PlayerExperience
 
         private void InvokeLevelUpEvents()
         {
-            _eventService.OnLevelUp.InvokeEvent(_currentXpLevel);
-            _eventService.RefreshExperienceValue.InvokeEvent(XPToNextLevel());
-            _eventService.RefreshExperience.InvokeEvent();
+            _eventService.ResetLevel.InvokeEvent(_currentXpLevel);
+            _eventService.ResetExperienceValue.InvokeEvent(XPToNextLevel());
+            _eventService.ResetExperience.InvokeEvent();
         }
-        public int XPToNextLevel() => levelProgressionSO.GetXPForLevel(_currentXpLevel);
+        public int XPToNextLevel() => _levelProgressionSO.GetXPForLevel(_currentXpLevel);
     }
 }

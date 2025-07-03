@@ -20,6 +20,7 @@ namespace PlayerExperience.UI
         public void InjectDependecies(EventService eventService)
         {
             _eventService  = eventService;
+            _playerExperienceUIController.AddListensers();
         }
     }
 }

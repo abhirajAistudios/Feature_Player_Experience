@@ -2,17 +2,17 @@ namespace PlayerExperience.Events
 {
     public class EventService 
     {
-        public EventController<int> OnIncreaseOfXp;
-        public EventController<int> RefreshExperienceValue;
-        public EventController RefreshExperience;
-        public EventController<int> OnLevelUp;
+        public EventController<int> OnGainXp;
+        public EventController<int> ResetExperienceValue;
+        public EventController<int> ResetLevel;
+        public EventController ResetExperience;
 
         public EventService()
         {
-            OnIncreaseOfXp = new EventController<int>();
-            RefreshExperience = new EventController();
-            OnLevelUp = new EventController<int>();
-            RefreshExperienceValue = new EventController<int>();
+            OnGainXp = new EventController<int>();
+            ResetExperience = new EventController();
+            ResetLevel = new EventController<int>();
+            ResetExperienceValue = new EventController<int>();
         }
     }
 }

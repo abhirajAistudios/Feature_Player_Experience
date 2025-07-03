@@ -9,9 +9,13 @@ namespace PlayerExperience
         public EventService EventService { get; private set; }
         public PlayerExperienceLevelController PlayerExperience { get; private set; }
         
+        public PlayerController PlayerController { get; private set; }
+        
         [SerializeField]private UIService _uiService;
         public UIService UIService => _uiService;
 
+        [SerializeField]private PlayerView _playerView;
+        [SerializeField]private LevelProgressionSO _levelProgressionSO;
         private void Awake()
         {
             InitializeServices();
@@ -21,7 +25,8 @@ namespace PlayerExperience
         private void InitializeServices()
         {
             EventService = new EventService();
-            PlayerExperience = new PlayerExperienceLevelController();
+            PlayerController = new PlayerController(_playerView);
+            PlayerExperience = new PlayerExperienceLevelController(_levelProgressionSO);
             _uiService.UIStart();
         }
 
@@ -29,6 +34,7 @@ namespace PlayerExperience
         {
             PlayerExperience.InjectDependecies(EventService);
             _uiService.InjectDependecies(EventService);
+            PlayerController.InjectDependencies(EventService);
         }
     }
 }

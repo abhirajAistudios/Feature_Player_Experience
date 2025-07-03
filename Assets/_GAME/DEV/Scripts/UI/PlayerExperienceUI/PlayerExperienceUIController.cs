@@ -6,22 +6,23 @@ namespace PlayerExperience.UI
     {
         private PlayerExperienceUIView _playerExperienceUIView;
         private UIService _uiService;
+
+        private int _initialValue = 0;
         
         public PlayerExperienceUIController(PlayerExperienceUIView playerExperienceUIView, UIService uiService)
         {
             _playerExperienceUIView = playerExperienceUIView;
             _uiService = uiService;
             _playerExperienceUIView.SetController(this);
-            AddListensers();
         }
 
         public void AddListensers()
         {
-           _uiService._eventService.OnIncreaseOfXp.AddListener(IncreaseSliderValue);
-           _uiService._eventService.RefreshExperience.AddListener(ResetSliderValue);
-           _uiService._eventService.RefreshExperienceValue.AddListener(ResetSliderMaxValue);
-           _uiService._eventService.OnLevelUp.AddListener(ResetLevelText);
-           _uiService._eventService.OnIncreaseOfXp.AddListener(Show);
+           _uiService._eventService.OnGainXp.AddListener(IncreaseSliderValue);
+           _uiService._eventService.OnGainXp.AddListener(Show);
+           _uiService._eventService.ResetExperience.AddListener(ResetSliderValue);
+           _uiService._eventService.ResetExperienceValue.AddListener(ResetSliderMaxValue);
+           _uiService._eventService.ResetLevel.AddListener(ResetLevelText);
         }
         
         private void IncreaseSliderValue(int value)
@@ -32,7 +33,7 @@ namespace PlayerExperience.UI
 
         private void ResetSliderValue()
         {
-            _playerExperienceUIView._experienceFiller.value = 0;
+            _playerExperienceUIView._experienceFiller.value = _initialValue;
             _playerExperienceUIView._xpText.text = _playerExperienceUIView._experienceFiller.value + " / "  + _playerExperienceUIView._experienceFiller.maxValue;
         }
 
