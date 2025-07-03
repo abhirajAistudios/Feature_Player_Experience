@@ -1,4 +1,5 @@
 using PlayerExperience.Events;
+using PlayerExperience.UI;
 using UnityEngine;
 
 namespace PlayerExperience

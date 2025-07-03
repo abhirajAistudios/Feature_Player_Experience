@@ -7,9 +7,9 @@ namespace PlayerExperience
     {
         private EventService _eventService;
         public LevelProgressionSO levelProgressionSO;
+        
         private int _currentXpLevel = 1;
         private int _currentXp = 0;
-        
 
         public void InjectDependecies(EventService eventService)
         {
@@ -26,7 +26,6 @@ namespace PlayerExperience
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 _eventService.OnIncreaseOfXp.InvokeEvent(20);
-                Debug.Log(XPToNextLevel());
             }
         }
 
@@ -42,9 +41,7 @@ namespace PlayerExperience
         private void LevelUp()
         {
             _currentXp -= XPToNextLevel();
-           
-           
-
+            
             var rewards = levelProgressionSO.GetRewardsForLevel(_currentXpLevel);
             if (rewards != null)
             {
@@ -55,12 +52,15 @@ namespace PlayerExperience
             }
             _currentXpLevel++;
             
+            InvokeLevelUpEvents();
+        }
+
+        private void InvokeLevelUpEvents()
+        {
             _eventService.OnLevelUp.InvokeEvent(_currentXpLevel);
             _eventService.RefreshExperienceValue.InvokeEvent(XPToNextLevel());
             _eventService.RefreshExperience.InvokeEvent();
-            Debug.Log(_currentXpLevel);
         }
-
         public int XPToNextLevel() => levelProgressionSO.GetXPForLevel(_currentXpLevel);
     }
 }
