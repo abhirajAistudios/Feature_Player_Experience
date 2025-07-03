@@ -1,8 +1,5 @@
-using System.Collections;
 using PlayerExperience.Events;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace PlayerExperience.UI
 {

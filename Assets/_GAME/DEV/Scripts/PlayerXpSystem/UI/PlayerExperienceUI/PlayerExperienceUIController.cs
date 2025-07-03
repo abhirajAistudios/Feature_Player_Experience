@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace PlayerExperience.UI
 {
     public class PlayerExperienceUIController
@@ -37,27 +35,6 @@ namespace PlayerExperience.UI
         private void ResetLevelText(int value)
         {
             _playerExperienceUIView._levelText.text = "Level " + value;
-           // StartCoroutine(LevelUpPopUp(value));
         }
-        
-        private void Show(int value)
-        {
-            //StartCoroutine(ShowXpPopUp(value));
-        }
-
-       // private IEnumerator ShowXpPopUp(int value)
-       // {
-       //     _xpGainedPopUp.text = "+" + value + " XP";
-       //     _xpGainedPopUp.gameObject.SetActive(true);
-       //     yield return new WaitForSeconds(1);
-       //     _xpGainedPopUp.gameObject.SetActive(false);
-       // }
-//
-       // private IEnumerator LevelUpPopUp(int value)
-       // {
-       //     _levelUpPopUp.gameObject.SetActive(true);
-       //     yield return new WaitForSeconds(1);
-       //     _levelUpPopUp.gameObject.SetActive(false);
-       // }
     }
 }

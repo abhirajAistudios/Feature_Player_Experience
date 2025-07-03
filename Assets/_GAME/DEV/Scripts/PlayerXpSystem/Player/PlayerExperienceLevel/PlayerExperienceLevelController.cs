@@ -11,8 +11,7 @@ namespace PlayerExperience
         private int _currentXpLevel = 1;
         private int _currentXp;
         private int _initialXp = 0;
-
-        private bool _leveledUp;
+        
         public PlayerExperienceLevelController(LevelProgressionSO levelProgressionSO)
         {
             _levelProgressionSO = levelProgressionSO;
@@ -55,19 +54,10 @@ namespace PlayerExperience
             }
             
             _currentXp += gainAmount;
-
-            _leveledUp = false;
             
             while (_currentXp >= XPToNextLevel())
             {
                 LevelUp();
-                
-               if (_currentXpLevel >= _levelProgressionSO.MaxLevel)
-               {
-                   _currentXp = 0; // optionally reset to 0
-                   Debug.Log($"[XP] Reached max level {_currentXpLevel}!");
-                   return;
-               }
             }
             
             InvokeLevelUpEvents();
@@ -80,8 +70,7 @@ namespace PlayerExperience
                 _currentXp -= XPToNextLevel();
                 _currentXpLevel++;
             }
-                
-            _leveledUp = true;
+            
                 
             var rewards = _levelProgressionSO.GetRewardsForLevel(_currentXpLevel);
             if (rewards != null)
@@ -90,6 +79,13 @@ namespace PlayerExperience
                 {
                     reward.Unlock();
                 }
+            }
+            
+            if (_currentXpLevel >= _levelProgressionSO.MaxLevel)
+            {
+                _currentXp = 0; // optionally reset to 0
+                Debug.Log($"[XP] Reached max level {_currentXpLevel}!");
+                return;
             }
         }
         private void InvokeLevelUpEvents()
